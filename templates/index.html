@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cutler Capital</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-family: 'Georgia', serif;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1em;
+            margin-top: 5px;
+        }
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .checkbox-container {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .checkbox-container input {
+            margin-right: 10px;
+            display: none;
+        }
+        .checkbox-container.checked {
+            background-color: #28a745;
+            color: #fff;
+            border-color: #28a745;
+        }
+        .checkbox-container label {
+            margin: 0;
+            font-weight: normal;
+        }
+        .actions {
+            margin-top: 30px;
+        }
+        button {
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            text-align: center;
+            width: 100%;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .select-all {
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cutler Capital</h1>
+        <form id="downloadForm" method="POST" action="/download">
+            <div class="form-group">
+                <label for="url">Document URL:</label>
+                <input type="text" id="url" name="url" placeholder="Enter the document URL">
+            </div>
+            <div class="form-group">
+                <label>Select Companies:</label>
+                <div class="checkbox-grid">
+                    <div class="checkbox-container" onclick="toggleCheckbox(this)">
+                        <input type="checkbox" id="company1" name="companies" value="Fidelity">
+                        <label for="company1">Fidelity</label>
+                    </div>
+                    <div class="checkbox-container" onclick="toggleCheckbox(this)">
+                        <input type="checkbox" id="company2" name="companies" value="Baron Capital">
+                        <label for="company2">Baron Capital</label>
+                    </div>
+                    <div class="checkbox-container" onclick="toggleCheckbox(this)">
+                        <input type="checkbox" id="company3" name="companies" value="Goldman Sachs">
+                        <label for="company3">Goldman Sachs</label>
+                    </div>
+                    <div class="checkbox-container" onclick="toggleCheckbox(this)">
+                        <input type="checkbox" id="company4" name="companies" value="Vanguard">
+                        <label for="company4">Vanguard</label>
+                    </div>
+                    <div class="checkbox-container" onclick="toggleCheckbox(this)">
+                        <input type="checkbox" id="company5" name="companies" value="BlackRock">
+                        <label for="company5">BlackRock</label>
+                    </div>
+                    <div class="checkbox-container" onclick="toggleCheckbox(this)">
+                        <input type="checkbox" id="company6" name="companies" value="T. Rowe Price">
+                        <label for="company6">T. Rowe Price</label>
+                    </div>
+                    <div class="checkbox-container" onclick="toggleCheckbox(this)">
+                        <input type="checkbox" id="company7" name="companies" value="First Community">
+                        <label for="company7">First Community</label>
+                    </div>
+                    <div class="checkbox-container" onclick="toggleCheckbox(this)">
+                        <input type="checkbox" id="company8" name="companies" value="Chesapeake Financial">
+                        <label for="company8">Chesapeake Financial</label>
+                    </div>
+                    <div class="checkbox-container" onclick="toggleCheckbox(this)">
+                        <input type="checkbox" id="company9" name="companies" value="Oaktree Capital">
+                        <label for="company9">Oaktree Capital</label>
+                    </div>
+                    <div class="checkbox-container" onclick="toggleCheckbox(this)">
+                        <input type="checkbox" id="company10" name="companies" value="Barclays Equity Strategy">
+                        <label for="company10">Barclays Equity Strategy</label>
+                    </div>
+                </div>
+                <div class="select-all">
+                    <input type="checkbox" id="selectAll" onclick="toggleSelectAll()">
+                    <label for="selectAll">Select All</label>
+                </div>
+            </div>
+            <div class="actions">
+                <button type="submit">Download Documents</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        function toggleCheckbox(container) {
+            const checkbox = container.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+            container.classList.toggle('checked', checkbox.checked);
+        }
+        function toggleSelectAll() {
+            const checkboxes = document.querySelectorAll('input[name="companies"]');
+            const containers = document.querySelectorAll('.checkbox-container');
+            const selectAll = document.getElementById('selectAll');
+            checkboxes.forEach((checkbox, index) => {
+                checkbox.checked = selectAll.checked;
+                containers[index].classList.toggle('checked', selectAll.checked);
+            });
+        }
+    </script>
+</body>
+</html>
